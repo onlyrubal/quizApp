@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './question.dart';
 
 void main() {
   //Function created by flutter team to run the app. It accepts the widget and displays it's property.
@@ -12,14 +13,14 @@ class MyApp extends StatefulWidget {
 
 // It tells that this state belongs to MyApp Class
 class _MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+  var _questionIndex = 0;
 
-  void answerQuestion() {
+  void _answerQuestion() {
     print('Answer chosen');
     setState(() {
-      questionIndex++;
+      _questionIndex++;
     });
-    print(questionIndex);
+    print(_questionIndex);
   }
 
   @override
@@ -37,10 +38,10 @@ class _MyAppState extends State<MyApp> {
           ),
           body: Column(
             children: <Widget>[
-              Text(questions[questionIndex]),
+              Question(questions[_questionIndex]),
               RaisedButton(
                 child: Text('Answer 1'),
-                onPressed: answerQuestion,
+                onPressed: _answerQuestion,
               ),
               RaisedButton(
                 child: Text('Answer 2'),
@@ -50,7 +51,7 @@ class _MyAppState extends State<MyApp> {
               ),
               RaisedButton(
                 child: Text('Answer 3'),
-                onPressed: answerQuestion,
+                onPressed: _answerQuestion,
               ),
             ],
           )),
