@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
 class Question extends StatelessWidget {
-  String questionText;
+  final String questionText;
 
-  //Calling constructor.
+  //Calling constructor shorthand.
   Question(this.questionText);
 
   @override
   Widget build(BuildContext context) {
-    return Text(questionText);
+    return Container(
+        width: double.infinity,
+        margin: EdgeInsets.all(10.0),
+        child: Text(
+          questionText,
+          style: TextStyle(fontSize: 24),
+          textAlign: TextAlign.center,
+        ));
   }
 }

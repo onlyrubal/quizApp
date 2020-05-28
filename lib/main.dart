@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './question.dart';
+import './answer.dart';
 
 void main() {
   //Function created by flutter team to run the app. It accepts the widget and displays it's property.
@@ -19,6 +20,7 @@ class _MyAppState extends State<MyApp> {
     print('Answer chosen');
     setState(() {
       _questionIndex++;
+      if (_questionIndex >= 3) _questionIndex = 0;
     });
     print(_questionIndex);
   }
@@ -26,33 +28,34 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var questions = [
-      'What\'s your favorite animal',
-      'What\'s your favorite color'
+      {
+        'questionText': 'What\'s your favorite animal',
+        'answers': ['zebra', 'dog', 'cat', 'lion']
+      },
+      {
+        'questionText': 'What\'s your favorite color',
+        'answers': ['black', 'red', 'green', 'red']
+      },
+      {
+        'questionText': 'Which city you like the most',
+        'answers': ['Toronto', 'Waterloo', 'London', 'Brampton']
+      }
     ];
     //home is the named argument because Material App can accepts numerous arguments.
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
             title: Text('My First App'),
-            backgroundColor: Color(0xff003a63),
+            backgroundColor: Color(0xff01579b),
           ),
           body: Column(
             children: <Widget>[
-              Question(questions[_questionIndex]),
-              RaisedButton(
-                child: Text('Answer 1'),
-                onPressed: _answerQuestion,
-              ),
-              RaisedButton(
-                child: Text('Answer 2'),
-                onPressed: () {
-                  print('Answer chosen from Anonymous function');
-                },
-              ),
-              RaisedButton(
-                child: Text('Answer 3'),
-                onPressed: _answerQuestion,
-              ),
+              Question(questions[_questionIndex]['questionText']),
+              ...(questions[_questionIndex]['answers'] as List<String>)
+                  .map((e) {
+                // e is the answer i.e list item of the answers list.
+                return Answer(_answerQuestion, e);
+              }).toList()
             ],
           )),
     );
