@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import 'package:quiz_app/quiz.dart';
+import 'package:quiz_app/result.dart';
+import './quiz.dart';
 
 void main() {
   //Function created by flutter team to run the app. It accepts the widget and displays it's property.
@@ -15,7 +16,7 @@ class MyApp extends StatefulWidget {
 // It tells that this state belongs to MyApp Class
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
-  static const questions = [
+  static const _questions = [
     {
       'questionText': 'What\'s your favorite animal',
       'answers': ['zebra', 'dog', 'cat', 'lion']
@@ -42,31 +43,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     //home is the named argument because Material App can accepts numerous arguments.
     return MaterialApp(
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text('My First App'),
-            backgroundColor: Color(0xff01579b),
-          ),
-          body: (_questionIndex < questions.length)
-              ? Column(
-                  children: <Widget>[
-                    Question(questions[_questionIndex]['questionText']),
-                    ...(questions[_questionIndex]['answers'] as List<String>)
-                        .map((e) {
-                      // e is the answer i.e list item of the answers list.
-                      return Answer(_answerQuestion, e);
-                    }).toList()
-                  ],
-                )
-              : Center(
-                  child: Text(
-                    'Quiz is completed. Reload the app.',
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Color(0xff01579b),
-                    ),
-                  ),
-                )),
-    );
+        home: Scaffold(
+      appBar: AppBar(
+        title: Text('My First App'),
+        backgroundColor: Color(0xff01579b),
+      ),
+      body: (_questionIndex < _questions.length)
+          ? Quiz(
+              questions: _questions,
+              questionIndex: _questionIndex,
+              answerQuestion: _answerQuestion,
+            )
+          : Result(),
+    ));
   }
 }
