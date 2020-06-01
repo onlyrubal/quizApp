@@ -16,27 +16,54 @@ class MyApp extends StatefulWidget {
 // It tells that this state belongs to MyApp Class
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
-  static const _questions = [
+  var _totalScore = 0;
+
+  // Data type of the custom data structure for _questions
+  // List<Map<String, Object>>
+  final _questions = const [
     {
       'questionText': 'What\'s your favorite animal',
-      'answers': ['zebra', 'dog', 'cat', 'lion']
+      'answers': [
+        {'text': 'zebra', 'score': 10},
+        {'text': 'dog', 'score': 5},
+        {'text': 'cat', 'score': 20},
+        {'text': 'lion', 'score': 0},
+      ]
     },
     {
       'questionText': 'What\'s your favorite color',
-      'answers': ['black', 'red', 'green', 'red']
+      'answers': [
+        {'text': 'black', 'score': 10},
+        {'text': 'red', 'score': 5},
+        {'text': 'green', 'score': 20},
+        {'text': 'yellow', 'score': 30},
+      ]
     },
     {
       'questionText': 'Which city you like the most',
-      'answers': ['Toronto', 'Waterloo', 'London', 'Brampton']
+      'answers': [
+        {'text': 'Toronto', 'score': 10},
+        {'text': 'Waterloo', 'score': 30},
+        {'text': 'London', 'score': 5},
+        {'text': 'Brampton', 'score': 70}
+      ]
     }
   ];
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
     print('Answer chosen');
+    _totalScore += score;
     setState(() {
       _questionIndex++;
     });
     // print(_questionIndex);
     // if (_questionIndex >= questions.length) _questionIndex = 0;
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _totalScore = 0;
+      _questionIndex = 0;
+    });
   }
 
   @override
@@ -54,7 +81,7 @@ class _MyAppState extends State<MyApp> {
               questionIndex: _questionIndex,
               answerQuestion: _answerQuestion,
             )
-          : Result(),
+          : Result(_totalScore, _resetQuiz),
     ));
   }
 }
